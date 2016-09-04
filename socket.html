@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	</head>
+	<body>
+		<script>
+			var socket = io.connect();
+			
+			// socket.on('data', function(data){
+			// 	console.log(data.message)
+			// });
+
+			// socket.on('date', function(data){
+			// 	$('#time').text(data.time);
+			// });
+
+			socket.on('data', function(data){
+				$('#board').append('<h3>' + data.message + ' ' + data.time + '</h3>');
+			});
+
+			$(document).ready(function() {
+				$('#submit').click(function(e){
+					var value = $('#content').val();
+					socket.emit('client_data', {
+						'message': value
+					});
+				});
+			});
+		</script>
+<!-- 
+		<h1>This is our socket.html file</h1>	
+		<h1 id="time"></h1>
+-->
+		<div id="board"></div>
+		<input type="text" id="content" />
+		<button id="submit">submit</button>
+		
+	</body>
+</html>
